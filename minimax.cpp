@@ -145,22 +145,6 @@ void capture(int x, int y, int e1, int e2, vector <vector <char>> &board, vector
     captured.push_back({x + k * e1, y + k * e2});
 }
 
-void do_move (int x, int y, vector <vector <char>> &board, pair <ull, ull> &h, char colour) {
-  board[x][y] = colour;
-  vector <pair <int, int>> captured;
-  for (int i = -1; i <= 1; i++)
-    for (int j = -1; j <= 1; j++) {
-      if (!i && !j) continue;
-      capture(x, y, i, j, board, captured);
-    }
-    for (auto &nownow : captured) {
-      int _x = nownow.fs, _y = nownow.sc;
-      board[_x][_y] = colour;
-      if (_x < 4) h.fs += p2[2 * (_x * 8 + _y) + colour - '0'] - p2[2 * (_x * 8 + _y) + '1' - colour];
-      else h.sc += p2[2 * ((_x - 4) * 8 + _y) + colour - '0'] - p2[2 * ((_x - 4) * 8 + _y) + '1' - colour];
-    }
-}
-
 int analysis(vector <vector <char>> &board, pair <ull, ull> h, char colour, int depth, int alpha, int beta) {
   if (depth == 0 || (max_depth[cntones(h.fs) + cntones(h.sc)].find({h.fs, h.sc}) != max_depth[cntones(h.fs) + cntones(h.sc)].end() && max_depth[cntones(h.fs) + cntones(h.sc)][{h.fs, h.sc}] >= depth)) {
     if (heurstic_value[cntones(h.fs) + cntones(h.sc)].find({h.fs, h.sc}) == heurstic_value[cntones(h.fs) + cntones(h.sc)].end())
