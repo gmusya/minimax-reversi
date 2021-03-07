@@ -94,6 +94,8 @@ int minimax(board state_cur, char colour, int depth, int alpha, int beta, int cr
   bool is_there_legit_move = false;
   for (int row = 0; row < 8; row++)
     for (int col = 0; col < 8; col++) {
+      if (alpha >= beta)
+        break;
       auto now = state_cur.make_move(colour, row, col);
       if (!now.first)
         continue;
@@ -103,8 +105,6 @@ int minimax(board state_cur, char colour, int depth, int alpha, int beta, int cr
         best_row = row, best_col = col;
       value = max(eval, value);
       alpha = max(alpha, value);
-      if (alpha >= beta)
-        break;
     }
   if (!is_there_legit_move)
     value = -minimax(state_cur, ('0' + '1') - colour, depth + 1, -beta, -alpha, critical_depth);
