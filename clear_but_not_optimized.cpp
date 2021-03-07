@@ -122,7 +122,7 @@ int main() {
     my_colour = '1', opp_colour = '0';
     int row, col;
     cin >> row >> col;
-    main_board.make_move(opp_colour, row, col);
+    main_board = main_board.make_move(opp_colour, row - 1, col - 1).second;
   } else {
     my_colour = '0', opp_colour = '1';
   }
